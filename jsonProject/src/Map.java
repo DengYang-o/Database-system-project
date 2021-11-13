@@ -42,7 +42,7 @@ public class Map {
 			int i=0;
 			while (it.hasNext()) {
 				returnType.addJSONType(String.valueOf(i), makeSchema(it.next()));
-				
+				i++;
 			}
 			return returnType;
 			
