@@ -3,14 +3,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class main {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [90]}}";  
-//		String str2="{\"nam\": \"Sam Smith\", \"tech\": {\"Same\": [90]}}";
+		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},[{\"Bow\": 0}] , {\"Game\": 90}]}}";
 //    	JSONParser parser=new JSONParser();
 //    	JSONObject json = null;
 //    	JSONObject json2=null;
@@ -32,9 +36,26 @@ public class main {
 //    	JSONObject jsonArray[]= {json, json2};
 //    	merge(jsonArray);
 		
+		Path fileName=Path.of("example.json");
+		String str3=Files.readString(fileName);
+		Map map3=new Map(str3);
+		JSONType json3=map3.createSchema();
+		//System.out.println(json3.printJSON());
+
+		
 		Map map=new Map(str);
+		Map map2=new Map(str2);
 		JSONType json=map.createSchema();
-		System.out.println(json.printJSON());
+		//System.out.println(json.getMap().get("name").getType());
+		JSONType json2=map2.createSchema();
+		ArrayList<JSONType> arr=new ArrayList<>();
+		arr.add(json);
+		arr.add(json2);
+		arr.add(json3);
+		KMerge merge=new KMerge(arr);
+		ArrayList<Object> result=merge.merge(arr);
+		printData(result);
+		
     	
 		
 	}
@@ -54,4 +75,29 @@ public class main {
 		
 		return null;
 	}
+
+
+
+static void printData(ArrayList<Object> arr) {
+	
+	for (int i=0; i<arr.size(); i++) {
+		if (arr.get(i) instanceof JSONType) {
+			System.out.println(((JSONType)(arr.get(i))).getType());
+		}else if (arr.get(i) instanceof ArrayList) {
+			System.out.println("Array: ");
+			printData((ArrayList<Object>)arr.get(i));
+		}else if (arr.get(i) instanceof HashMap) {
+			System.out.println("{");
+			HashMap<String, ArrayList<Object>> map=((HashMap)arr.get(i));
+			Iterator keys=map.keySet().iterator();
+			while(keys.hasNext()) {
+				String key=(String) keys.next();
+				System.out.print(key+": ");
+				printData(map.get(key));
+			}
+			System.out.println("}");
+		}
+	}
+	
+}
 }
