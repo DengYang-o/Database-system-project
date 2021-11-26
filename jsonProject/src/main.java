@@ -14,7 +14,7 @@ public class main {
 	
 	public static void main(String[] args) throws IOException {
 		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [90]}}";  
-		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},[{\"Bow\": 0}] , {\"Game\": 90}]}}";
+		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
 //    	JSONParser parser=new JSONParser();
 //    	JSONObject json = null;
 //    	JSONObject json2=null;
@@ -51,10 +51,11 @@ public class main {
 		ArrayList<JSONType> arr=new ArrayList<>();
 		arr.add(json);
 		arr.add(json2);
-		arr.add(json3);
-		KMerge merge=new KMerge(arr);
-		ArrayList<Object> result=merge.merge(arr);
-		printData(result);
+		//arr.add(json3);
+		KMerge2 merge=new KMerge2(arr);
+		ArrayList<MergeType> result=merge.merge(arr);
+		PrintData(result);
+		
 		
     	
 		
@@ -78,26 +79,59 @@ public class main {
 
 
 
-static void printData(ArrayList<Object> arr) {
+//static void printData(ArrayList<Object> arr) {
+//	
+//	for (int i=0; i<arr.size(); i++) {
+//		if (arr.get(i) instanceof JSONType) {
+//			System.out.println(((JSONType)(arr.get(i))).getType());
+//		}else if (arr.get(i) instanceof ArrayList) {
+//			System.out.println("Array: ");
+//			printData((ArrayList<Object>)arr.get(i));
+//		}else if (arr.get(i) instanceof HashMap) {
+//			System.out.println("{");
+//			HashMap<String, ArrayList<Object>> map=((HashMap)arr.get(i));
+//			Iterator keys=map.keySet().iterator();
+//			while(keys.hasNext()) {
+//				String key=(String) keys.next();
+//				System.out.print(key+": ");
+//				printData(map.get(key));
+//			}
+//			System.out.println("}");
+//		}
+//	}
+//	
+//}
 	
-	for (int i=0; i<arr.size(); i++) {
-		if (arr.get(i) instanceof JSONType) {
-			System.out.println(((JSONType)(arr.get(i))).getType());
-		}else if (arr.get(i) instanceof ArrayList) {
-			System.out.println("Array: ");
-			printData((ArrayList<Object>)arr.get(i));
-		}else if (arr.get(i) instanceof HashMap) {
-			System.out.println("{");
-			HashMap<String, ArrayList<Object>> map=((HashMap)arr.get(i));
-			Iterator keys=map.keySet().iterator();
-			while(keys.hasNext()) {
-				String key=(String) keys.next();
-				System.out.print(key+": ");
-				printData(map.get(key));
+	static void PrintData(ArrayList<MergeType> list) {
+		for (int i=0; i<list.size(); i++) {
+			MergeType merge=list.get(i);
+			if (merge.getType().equals("primitive")) {
+				System.out.println(list.get(i).getType());
+				
+			}else if (merge.getType().equals("array")) {
+				System.out.println("array: [");
+				PrintData(merge.getArray());
+				System.out.println("]");
+			}else if (merge.getType().equals("object")) {
+				System.out.println("{");
+				HashMap<String, ArrayList<MergeType>> map=list.get(i).getMap();
+				Iterator<String> iterate=map.keySet().iterator();
+				while(iterate.hasNext()) {
+					
+					String key=iterate.next();
+					System.out.println(key+": ");
+					PrintData(map.get(key));
+				
+					
+				}
+				ArrayList<String> optional=merge.getOptional();
+				System.out.println("Optional: ");
+				for (int j=0; j<optional.size(); j++) {
+					System.out.print(optional.get(j)+", ");
+				}
+				System.out.println("");
+				System.out.println("}");
 			}
-			System.out.println("}");
 		}
 	}
-	
-}
 }

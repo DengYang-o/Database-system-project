@@ -6,28 +6,47 @@ import java.util.Iterator;
 
 public class MergeType {
 	private String type;
-	private HashMap<String, ArrayList<JSONType>> map;
+	private HashMap<String, ArrayList<MergeType>> map;
+	private ArrayList<MergeType> arr;
 	private ArrayList<String> optional;
 	
 	public MergeType(String type) {
 		this.type=type;
-		map=new HashMap<String, ArrayList<JSONType>>();
+		this.map=new HashMap<String, ArrayList<MergeType>>();
+		this.arr= new ArrayList<>();
+		
 		optional=new ArrayList<>();
 		
+	}
+	
+	public ArrayList<String> getOptional(){
+		return this.optional;
+	}
+	
+	public void SetArray(ArrayList<MergeType> arr) {
+		this.arr=arr;
+	}
+	public void setMap(HashMap<String, ArrayList<MergeType>> map) {
+		this.map=map;
 	}
 	public String getType() {
 		return type;
 	}
-	public ArrayList<JSONType> getJSONType(String string) {
+	
+	public ArrayList<MergeType> getArray(){
+		return this.arr;
+	}
+	
+	public ArrayList<MergeType> getJSONType(String string) {
 		return map.get(string);
 	}
-	public void addJSONType(String string, ArrayList<JSONType> type) {
+	public void addJSONType(String string, ArrayList<MergeType> type) {
 		this.map.put(string, type);
 	}
 	public void addOptional(String string) {
 		this.optional.add(string);
 	}
-	public HashMap<String, ArrayList<JSONType>> getMap(){
+	public HashMap<String, ArrayList<MergeType>> getMap(){
 		return this.map;
 	}
 	
