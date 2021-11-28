@@ -14,7 +14,7 @@ public class main {
 	
 	public static void main(String[] args) throws IOException {
 		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [90]}}";  
-		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
+		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},{\"Game\": 80},{\"Game\": 80},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
 //    	JSONParser parser=new JSONParser();
 //    	JSONObject json = null;
 //    	JSONObject json2=null;
@@ -49,12 +49,13 @@ public class main {
 		//System.out.println(json.getMap().get("name").getType());
 		JSONType json2=map2.createSchema();
 		ArrayList<JSONType> arr=new ArrayList<>();
-		arr.add(json);
+		//arr.add(json);
 		arr.add(json2);
 		//arr.add(json3);
 		KMerge2 merge=new KMerge2(arr);
 		ArrayList<MergeType> result=merge.merge(arr);
 		PrintData(result);
+		System.out.println(getSize(result));
 		
 		
     	
@@ -119,7 +120,7 @@ public class main {
 				while(iterate.hasNext()) {
 					
 					String key=iterate.next();
-					System.out.println(key+": ");
+					System.out.print(key+": ");
 					PrintData(map.get(key));
 				
 					
@@ -133,5 +134,24 @@ public class main {
 				System.out.println("}");
 			}
 		}
+	}
+	
+	static int getSize(ArrayList<MergeType> arr) {
+		int returnNum=0;
+		for (int i=0; i<arr.size(); i++) {
+			if (arr.get(i).getType().equals("object")) {
+				HashMap<String, ArrayList<MergeType>> map=arr.get(i).getMap();
+				Iterator<String> key=map.keySet().iterator();
+				while(key.hasNext()) {
+					returnNum=returnNum+1+getSize(map.get(key.next()));
+				}
+			}else if (arr.get(i).getType().equals("array")) {
+				returnNum=returnNum+1+getSize(arr.get(i).getArray());
+			}else {
+				return returnNum+1;
+			}
+			
+		}
+		return returnNum;
 	}
 }
