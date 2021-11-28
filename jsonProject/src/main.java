@@ -13,17 +13,18 @@ public class main {
 
 	
 	public static void main(String[] args) throws IOException {
-		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [true]}}";  
+		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [true]}, \"tech\": {\"Same\": [9]}}";  
 		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
+		String str5 = " {\"Same\": 9}";  
+		String str6="{\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}";
     	JSONParser parser=new JSONParser();
-    	JSONObject json = null;
+    	//JSONObject json = null;
 //    	JSONObject json2=null;
-		try {
-			json = (JSONObject) parser.parse(str);
-		} catch (ParseException e) {
+		//	json = (JSONObject) parser.parse(str);
+		//} catch (ParseException e) {
 			// TODO Auto-generated catch block/			e.printStackTrace();
-		}
-		System.out.println((((JSONArray)((JSONObject)(json.get("technology"))).get("Same"))).get(0) instanceof Boolean);
+		//}
+		//System.out.println((((JSONArray)((JSONObject)(json.get("technology"))).get("Same"))).get(0) instanceof Boolean);
 		
 //		try {
 //			json2 = (JSONObject) parser.parse(str2);
@@ -46,13 +47,13 @@ public class main {
 		
 		Map map=new Map(str);
 		Map map2=new Map(str2);
-		//JSONType json=map.createSchema();
+		JSONType json=map.createSchema();
 		//System.out.println(json.getMap().get("name").getType());
 		JSONType json2=map2.createSchema();
 		ArrayList<JSONType> arr=new ArrayList<>();
-		//arr.add(json);
+		arr.add(json);
 		arr.add(json2);
-		//arr.add(json3);
+		arr.add(json3);
 		KMerge2 merge=new KMerge2(arr);
 		ArrayList<MergeType> result=merge.merge(arr);
 		
@@ -152,9 +153,10 @@ public class main {
 					returnNum=returnNum+1+getSize(map.get(key.next()));
 				}
 			}else if (arr.get(i).getType().equals("array")) {
+				System.out.println("Array");
 				returnNum=returnNum+1+getSize(arr.get(i).getArray());
 			}else {
-				return returnNum+1;
+				returnNum= returnNum+1;
 			}
 			
 		}
