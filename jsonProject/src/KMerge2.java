@@ -26,8 +26,22 @@ public class KMerge2 {
 			
 		}
 		ArrayList<MergeType> returnList=new ArrayList<>();
-		if (primList.isEmpty()==false) {
-			returnList.add(new MergeType("primitive"));
+		boolean containNum=false;
+		boolean containString=false;
+		boolean containBool=false;
+		for (int i=0; i<primList.size(); i++) {
+			if (primList.get(i).getType().equals("num") && containNum==false) {
+				returnList.add(new MergeType("num"));
+				containNum=true;
+			}
+			else if (primList.get(i).getType().equals("bool") && containBool==false) {
+				returnList.add(new MergeType("bool"));
+				containBool=true;
+			}else if (primList.get(i).getType().equals("string") && containString==false) {
+				returnList.add(new MergeType("string"));
+				containString=true;
+			}
+			
 		}
 		if (arrList.isEmpty()==false) {
 		returnList.add(arrayMerge(arrList));
@@ -98,8 +112,11 @@ public class KMerge2 {
 		Iterator<String> iterate=returnType.getMap().keySet().iterator();
 		while(iterate.hasNext()) {
 			String key=iterate.next();
-			if (returnType.getMap().get(key).size()<objList.size()) {
-				returnType.addOptional(key);
+			for (int i=0; i<objList.size(); i++) {
+				if (objList.get(i).getMap().containsKey(key)==false) {
+					returnType.addOptional(key);
+					break;
+				}
 			}
 		}
 		//System.out.println("Printed");

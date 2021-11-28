@@ -13,17 +13,18 @@ public class main {
 
 	
 	public static void main(String[] args) throws IOException {
-		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [90]}}";  
-		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80},{\"Game\": 80},{\"Game\": 80},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
-//    	JSONParser parser=new JSONParser();
-//    	JSONObject json = null;
+		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": [true]}}";  
+		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
+    	JSONParser parser=new JSONParser();
+    	JSONObject json = null;
 //    	JSONObject json2=null;
-//		try {
-//			json = (JSONObject) parser.parse(str);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			json = (JSONObject) parser.parse(str);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block/			e.printStackTrace();
+		}
+		System.out.println((((JSONArray)((JSONObject)(json.get("technology"))).get("Same"))).get(0) instanceof Boolean);
+		
 //		try {
 //			json2 = (JSONObject) parser.parse(str2);
 //		} catch (ParseException e) {
@@ -45,7 +46,7 @@ public class main {
 		
 		Map map=new Map(str);
 		Map map2=new Map(str2);
-		JSONType json=map.createSchema();
+		//JSONType json=map.createSchema();
 		//System.out.println(json.getMap().get("name").getType());
 		JSONType json2=map2.createSchema();
 		ArrayList<JSONType> arr=new ArrayList<>();
@@ -54,6 +55,7 @@ public class main {
 		//arr.add(json3);
 		KMerge2 merge=new KMerge2(arr);
 		ArrayList<MergeType> result=merge.merge(arr);
+		
 		PrintData(result);
 		System.out.println(getSize(result));
 		
@@ -106,32 +108,36 @@ public class main {
 	static void PrintData(ArrayList<MergeType> list) {
 		for (int i=0; i<list.size(); i++) {
 			MergeType merge=list.get(i);
-			if (merge.getType().equals("primitive")) {
-				System.out.println(list.get(i).getType());
-				
-			}else if (merge.getType().equals("array")) {
+			
+			if (merge.getType().equals("array")) {
 				System.out.println("array: [");
 				PrintData(merge.getArray());
 				System.out.println("]");
 			}else if (merge.getType().equals("object")) {
-				System.out.println("{");
+				System.out.println("type: object");
+				System.out.println("fields: [");
 				HashMap<String, ArrayList<MergeType>> map=list.get(i).getMap();
 				Iterator<String> iterate=map.keySet().iterator();
 				while(iterate.hasNext()) {
 					
 					String key=iterate.next();
-					System.out.print(key+": ");
+					System.out.println("name:"+key+",");
+					
 					PrintData(map.get(key));
 				
 					
 				}
+				System.out.println("]");
 				ArrayList<String> optional=merge.getOptional();
-				System.out.println("Optional: ");
+				System.out.print("Optional: ");
 				for (int j=0; j<optional.size(); j++) {
 					System.out.print(optional.get(j)+", ");
 				}
 				System.out.println("");
 				System.out.println("}");
+			}else {
+				System.out.println(list.get(i).getType());
+				
 			}
 		}
 	}

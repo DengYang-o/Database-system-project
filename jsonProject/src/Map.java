@@ -46,9 +46,13 @@ public class Map {
 			}
 			return returnType;
 			
-		}else {
+		}else if (obj instanceof Long){
 			
-			return new JSONType("primitive");
+			return new JSONType("num");
+		}else if (obj instanceof Boolean) {
+			return new JSONType("bool");
+		}else {
+			return new JSONType("string");
 		}
 	}
 }
