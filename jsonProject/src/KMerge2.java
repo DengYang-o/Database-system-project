@@ -29,6 +29,7 @@ public class KMerge2 {
 		boolean containNum=false;
 		boolean containString=false;
 		boolean containBool=false;
+		boolean containNull=false;
 		for (int i=0; i<primList.size(); i++) {
 			if (primList.get(i).getType().equals("num") && containNum==false) {
 				returnList.add(new MergeType("num"));
@@ -40,6 +41,9 @@ public class KMerge2 {
 			}else if (primList.get(i).getType().equals("string") && containString==false) {
 				returnList.add(new MergeType("string"));
 				containString=true;
+			}else if (primList.get(i).getType().equals("null") && containNull==false) {
+				returnList.add(new MergeType("null"));
+				containNull=true;
 			}
 			
 		}

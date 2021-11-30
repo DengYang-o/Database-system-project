@@ -25,8 +25,9 @@ public class Map {
 	
 	
 	public JSONType makeSchema(Object obj) {
-		
-		if (obj instanceof JSONObject) {
+		if (obj==null) {
+			return new JSONType("null");
+		}else if (obj instanceof JSONObject) {
 			//System.out.println("Object");
 			JSONType returnType=new JSONType("object");
 			Iterator<String> keys=((JSONObject)obj).keySet().iterator();
