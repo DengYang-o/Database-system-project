@@ -32,13 +32,13 @@ public class main {
 			// TODO Auto-generated catch block
 		//	e.printStackTrace();
 		//}
-		JSONMap map1=new JSONMap(str6);
-		JSONMap map2=new JSONMap(str5);
+		Map map1=new Map(str);
+		Map map2=new Map(str2);
 		ArrayList<JSONType> arrlist=new ArrayList<>();
 		arrlist.add(map1.createSchema());
-		arrlist.add(map2.createSchema());
+		//arrlist.add(map2.createSchema());
 		KMerge2 merge2=new KMerge2(arrlist);
-		System.out.println(Display.getData(merge2.kMerge()));
+		System.out.println(Display.getData(merge2.merge(arrlist)));
 		
 		
 		Path fileName=Path.of("nyt.json");
@@ -49,14 +49,14 @@ public class main {
 	;
 		ArrayList<JSONType> arr=new ArrayList<>();
 		for (int i=0; i<array.size();i++) {
-			JSONMap map=new JSONMap(array.get(i).toString());
+			Map map=new Map(array.get(i).toString());
 			arr.add(map.createSchema());
 			
 		}
 		System.out.println("Number of records in sample: "+arr.size());
 		
 		KMerge2 merge=new KMerge2(arr);
-		ArrayList<MergeType> result=merge.kMerge();
+		ArrayList<MergeType> result=merge.merge(arr);
 		System.out.println("Results:");
 		
 		
@@ -67,7 +67,7 @@ public class main {
 			ArrayList<JSONType> arr2=new ArrayList<>();
 			arr2.add(arr.get(i));
 			KMerge2 m=new KMerge2(arr2);
-			ArrayList<MergeType> r=m.kMerge();
+			ArrayList<MergeType> r=m.merge(arr2);
 			num=num+(Display.getSize(r));
 		}
 		System.out.println("Map average type size: "+num/arr.size());

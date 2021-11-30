@@ -11,11 +11,7 @@ public class KMerge2 {
 		this.array=array;
 	}
 	
-	public ArrayList<MergeType> kMerge() {
-		return merge(this.array);
-	}
-	
-	private ArrayList<MergeType> merge(ArrayList<JSONType> list){
+	public ArrayList<MergeType> merge(ArrayList<JSONType> list){
 		ArrayList<JSONType> objList=new ArrayList<>();
 		ArrayList<JSONType> arrList=new ArrayList<>();
 		ArrayList< JSONType> primList=new ArrayList<>();

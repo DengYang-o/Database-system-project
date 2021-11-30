@@ -34,11 +34,7 @@ static void PrintData(ArrayList<MergeType> list) {
 			
 				
 			}
-			if (list.size()>1 && i<(list.size()-1)) {
-				System.out.print("}+");
-			}else {
-				System.out.print("}");
-			}
+			System.out.print("}");
 			
 			ArrayList<String> optional=merge.getOptional();
 //			System.out.print("Optional: ");
@@ -48,11 +44,8 @@ static void PrintData(ArrayList<MergeType> list) {
 			//System.out.println("");
 			//System.out.println("}");
 		}else {
-			if (list.size()>1 && i<(list.size()-1)) {
-				System.out.print(list.get(i).getType()+"+");
-			}else {
-				System.out.print(list.get(i).getType()+" ");
-			}
+			System.out.print(list.get(i).getType()+" ");
+			
 		}
 	}
 }
@@ -84,12 +77,8 @@ static String getData(ArrayList<MergeType> list) {
 			
 				
 			}
-			if (list.size()>1 && i<(list.size()-1)) {
-				str=str+"}+";
-			}else {
-				str=str+'}';
-			}
 			
+			str=str+'}';
 			
 			ArrayList<String> optional=merge.getOptional();
 //			System.out.print("Optional: ");

@@ -32,8 +32,8 @@ public class main {
 			// TODO Auto-generated catch block
 		//	e.printStackTrace();
 		//}
-		JSONMap map1=new JSONMap(str6);
-		JSONMap map2=new JSONMap(str5);
+		Map map1=new Map(str6);
+		Map map2=new Map(str5);
 		ArrayList<JSONType> arrlist=new ArrayList<>();
 		arrlist.add(map1.createSchema());
 		arrlist.add(map2.createSchema());
@@ -49,7 +49,7 @@ public class main {
 	;
 		ArrayList<JSONType> arr=new ArrayList<>();
 		for (int i=0; i<array.size();i++) {
-			JSONMap map=new JSONMap(array.get(i).toString());
+			Map map=new Map(array.get(i).toString());
 			arr.add(map.createSchema());
 			
 		}
