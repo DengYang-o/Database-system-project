@@ -13,10 +13,10 @@ public class main {
 
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": null}, \"tech\": {\"Same\": [9]}}";  
-		String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
-		String str5 = " {\"Same\": 9}";  
-		String str6="{\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}";
+		//String str = "{\"name\": \"Sam Smith\", \"technology\": {\"Same\": null}, \"tech\": {\"Same\": [9]}}";  
+		//String str2="{\"name\": {\"tech\": \"Sam Smith\"}, \"tech\": {\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}}";
+		//String str5 = " {\"Same\": 9}";  
+		//String str6="{\"Same\": [90, {\"Game\": 80}, {\"Game\": 90},[{\"Bow\": 0}] , [{\"Game\": 90}]]}";
     	JSONParser parser=new JSONParser();
     	//JSONObject json = null;
     	JSONObject json2=null;
@@ -26,17 +26,17 @@ public class main {
 		//}
 		//System.out.println((((JSONArray)((JSONObject)(json.get("technology"))).get("Same"))).get(0) instanceof Boolean);
 		
-		try {
-			json2 = (JSONObject) parser.parse(str);
-		} catch (ParseException e) {
+		//try {
+			//json2 = (JSONObject) parser.parse(str);
+		//} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Map map1=new Map(str);
-		Map map2=new Map(str2);
+		//	e.printStackTrace();
+		//}
+		//Map map1=new Map(str);
+		//Map map2=new Map(str2);
 		ArrayList<JSONType> arrlist=new ArrayList<>();
-		arrlist.add(map1.createSchema());
-		arrlist.add(map2.createSchema());
+		//arrlist.add(map1.createSchema());
+		//arrlist.add(map2.createSchema());
 		KMerge2 merge2=new KMerge2(arrlist);
 		//PrintData(merge2.merge(arrlist));
 		
