@@ -14,68 +14,9 @@ public class main {
 
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		CallL3Merge("testing.json");
+		CallK3Merge("vk.json");
 	}
 	
-	
-	static void CallL3Merge(String filename) throws IOException, ParseException {
-		
-			String str3=null;
-			Path fileName=Paths.get(filename);
-			try{
-				str3=new String(Files.readAllBytes(fileName));
-			}catch (IOException e){
-				System.out.println("Can't find file to open");
-			}
-
-			JSONParser parser1=new JSONParser();
-			JSONArray array=(JSONArray) parser1.parse(str3);
-			System.out.println("Number of records in sample: "+array.size());
-			//ArrayList<MergeType> mergeArr=new ArrayList<>();
-
-			
-			ArrayList<MergeType> mergeArr=new ArrayList<>();
-			int divide=1;
-			if (array.size()>500) {
-				divide=500;
-			}
-			for (int i=0; i<array.size()/divide; i++) {
-				ArrayList<JSONType> tempArray=new ArrayList<>();
-				for (int j=0; j<divide; j++) {
-					//System.out.println(i*divide+j);
-					if ((i*divide+j)>=array.size()) {
-						break;
-					}
-					JSONMap map=new JSONMap(array.get(i*divide+j).toString());
-					
-					tempArray.add(map.createSchema());
-				}
-				mergeArr.addAll(new LMerge2(tempArray).kMerge());
-			}
-			//System.out.println(mergeArr.size());
-			
-			
-//			System.out.println("Number of records in sample: "+arr.size());
-//			
-			LMerge3 merge=new LMerge3(mergeArr);
-			ArrayList<MergeType> result=merge.kMerge();
-			System.out.println("Results:");
-			
-//			
-			System.out.println("");
-			System.out.println("Result schema: "+Display.getData(result));
-			double num=0.0;
-			for (int i=0; i<array.size();i++) {
-				ArrayList<JSONType> arr2=new ArrayList<>();
-				arr2.add(new JSONMap(array.get(i).toString()).createSchema());
-				LMerge2 m=new LMerge2(arr2);
-				ArrayList<MergeType> r=m.kMerge();
-				num=num+(Display.getSize(r));
-			}
-			System.out.println("Map average type size: "+num/array.size());
-			System.out.println("Reduction final size:"+Display.getSize(result));
-			
-		}
 	
 	static void CallK2Merge(String filename) throws ParseException {
 		ArrayList<JSONType> arrlist=new ArrayList<>();
@@ -140,30 +81,31 @@ public class main {
 
 		JSONParser parser1=new JSONParser();
 		JSONArray array=(JSONArray) parser1.parse(str3);
-		System.out.println("Number of records in sample: "+array.size());
+	;
 		ArrayList<JSONType> arr=new ArrayList<>();
 		//ArrayList<MergeType> mergeArr=new ArrayList<>();
-
+		for (int i=0; i<array.size();i++) {
+			JSONMap map=new JSONMap(array.get(i).toString());
+			arr.add(map.createSchema());
+			ArrayList<JSONType> jsonArr=new ArrayList<>();
+			jsonArr.add(arr.get(i));
+			
+			ArrayList<MergeType> m=new KMerge2(jsonArr).kMerge();
+		//	mergeArr.addAll(m);
+			
+			
+		}
 		
 		ArrayList<MergeType> mergeArr=new ArrayList<>();
-		int divide=1;
-		if (array.size()>500) {
-			divide=500;
-		}
-		for (int i=0; i<array.size()/divide; i++) {
+		for (int i=0; i<array.size()/500; i++) {
 			ArrayList<JSONType> tempArray=new ArrayList<>();
-			for (int j=0; j<divide; j++) {
-				//System.out.println(i*divide+j);
-				if ((i*divide+j)>=array.size()) {
-					break;
-				}
-				JSONMap map=new JSONMap(array.get(i*divide+j).toString());
-				
+			for (int j=0; j<500; j++) {
+				System.out.println(i*500+j);
+				JSONMap map=new JSONMap(array.get(i*500+j).toString());
 				tempArray.add(map.createSchema());
 			}
 			mergeArr.addAll(new KMerge2(tempArray).kMerge());
 		}
-		//System.out.println(mergeArr.size());
 		
 		
 //		System.out.println("Number of records in sample: "+arr.size());
@@ -176,14 +118,14 @@ public class main {
 		System.out.println("");
 		System.out.println("Result schema: "+Display.getData(result));
 		double num=0.0;
-		for (int i=0; i<array.size();i++) {
+		for (int i=0; i<arr.size();i++) {
 			ArrayList<JSONType> arr2=new ArrayList<>();
-			arr2.add(new JSONMap(array.get(i).toString()).createSchema());
+			arr2.add(arr.get(i));
 			KMerge2 m=new KMerge2(arr2);
 			ArrayList<MergeType> r=m.kMerge();
 			num=num+(Display.getSize(r));
 		}
-		System.out.println("Map average type size: "+num/array.size());
+		System.out.println("Map average type size: "+num/arr.size());
 		System.out.println("Reduction final size:"+Display.getSize(result));
 		
 	}

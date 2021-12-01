@@ -8,14 +8,14 @@ import org.json.simple.parser.ParseException;
 public class JSONMap {
 	private JSONParser parser;
 	private JSONObject json;
-	public JSONMap(String jsonString) throws ParseException {
+	public JSONMap(String jsonString) {
 		parser=new JSONParser();
-		//try {
+		try {
 			json = (JSONObject) parser.parse(jsonString);
-		//} catch (ParseException e) {
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
+			e.printStackTrace();
+		}
 		
 	}
 	

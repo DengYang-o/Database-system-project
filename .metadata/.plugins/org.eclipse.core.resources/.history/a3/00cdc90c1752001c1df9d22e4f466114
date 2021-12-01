@@ -15,7 +15,7 @@ public class LMerge {
 //		System.out.println(data);
 		for (int i = 0; i < test.length; i++) {
 			  String[] sample = test[i].split(":");
-			  if (sample.length>1 && getType(sample[1])=="obj"){
+			  if (sample.length>0 && getType(sample[1])=="obj"){
 				  String [] tmp = Arrays.copyOfRange(test, i, test.length);
 				  String obj = getObj(tmp);
 				  i = i+findskip(obj);
@@ -327,7 +327,7 @@ public class LMerge {
 //		System.out.println(n + " " + a);
 		String schema = "";
 	    try {
-	        File myObj = new File("yelp_academic_dataset_tip.json");
+	        File myObj = new File("example.json");
 	        Scanner myReader = new Scanner(myObj);
 	        int x= 0;
 	        String data = myReader.nextLine();

@@ -327,7 +327,7 @@ public class LMerge {
 //		System.out.println(n + " " + a);
 		String schema = "";
 	    try {
-	        File myObj = new File("yelp_academic_dataset_tip.json");
+	        File myObj = new File("yelp-academic-dataset-tip.json");
 	        Scanner myReader = new Scanner(myObj);
 	        int x= 0;
 	        String data = myReader.nextLine();
