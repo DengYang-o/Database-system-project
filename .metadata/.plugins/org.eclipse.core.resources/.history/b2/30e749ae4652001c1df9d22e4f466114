@@ -14,11 +14,7 @@ public class main {
 
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		System.out.println("K Merge results");
-		CallK3Merge("nyt.json");
-		System.out.println("L Merge results");
-		CallL3Merge("nyt.json");
-		
+		CallL3Merge("testing.json");
 	}
 	
 	
